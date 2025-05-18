@@ -1,12 +1,25 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { NavbarComponent } from "./components/layouts/navbar/navbar.component";
+import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavbarComponent,NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'proyecto-daniel-lopez';
+  showNavBar = true;
+
+  constructor(
+    private router: Router
+  )
+  {
+    this.router.events.subscribe(() => {
+      this.showNavBar = this.router.url !== '/' && this.router.url !== '/main';
+    })
+  }
+
 }

@@ -1,0 +1,31 @@
+<div *ngIf="character.length > 0" class="cards__container">
+    @for (character of character; track character.slug){
+        <div class="char__card">
+            <div class="char__card__header">
+                <img [src]="character.image" alt="{{ character.name }}" class="char__card__header--img" (error)="handleImageError($event)"/>
+            </div>
+            <div class="char__card__content">
+                <div class="char__card__content--title">{{ character.name }}</div>
+                <div class="char__card__content--details">
+                    <div class="char__card__content--details--house">
+                        Casa: {{character.house || 'Ninguna'}}
+                    </div>
+                    <div class="char__card__content--details--alias_names">
+                        Alias: {{character.alias_names.join(', ') || 'Ninguno'}}
+                    </div>
+                    <div class="char__card__content--details--wand">
+                        Varita: {{character.wand || 'Ninguna'}}
+                    </div>
+                </div>
+            </div>
+            <div class="char__card__footer">
+                <p-button label="Detalles" severity="success" class="char__card__footer--btn" size="large"/>
+            </div>
+          </div>
+    }
+</div>
+
+<p-paginator (onPageChange)="onPageChange($event)" 
+[first]="first" 
+[rows]="rows"
+[totalRecords]="totalRecords"/>

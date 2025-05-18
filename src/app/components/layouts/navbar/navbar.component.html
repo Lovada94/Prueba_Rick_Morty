@@ -1,0 +1,13 @@
+<div class="nav__container">
+    <div class="nav__container-left">
+        <div class="nav__logo">
+            <img class="nav__logo--img" (click)="navigateTo('main')" [src]="getImageLogo()"/>
+        </div>
+        <div class="nav__item" (click)="navigateTo('characters')">Personajes</div>
+        <div class="nav__item" (click)="navigateTo('potions')">Pociones</div>
+        <div class="nav__item" (click)="navigateTo('spells')">Hechizos</div>
+    </div>
+    <div class="nav__container--right">
+        <div class="nav__item" (click)="navigateTo('contact')">Contacto</div>
+    </div>
+</div>
