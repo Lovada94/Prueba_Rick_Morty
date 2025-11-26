@@ -1,0 +1,32 @@
+<div class="modal__container" *ngIf="character">
+    <div class="header">
+        <div class="header__title">{{character.name}}</div>
+    </div>
+    <p-button
+        size='small' icon="pi pi-times" [rounded]="true" [text]="true" 
+        severity="danger" [raised]="true" (click)="close()"/>
+    <div class="card__detail">
+        <div class="card__detail__left">
+            <img [src]="character.image" alt="{{ character.name }}" (error)="handleImageError($event)" class="card__detail__left--img"/>
+        </div>
+        <div class="card__detail__right">
+            <div class="chard__detail">Alias: {{character.alias_names.join(', ') || 'Ninguno'}}</div>
+            <div class="chard__detail">Animago: {{character.animagus || 'Desconocido'}}</div>
+            <div class="chard__detail">Sangre: {{character.blood_status || 'Desconocido'}}</div>
+            <div class="chard__detail">Género: {{character.gender || 'Desconocido'}}</div>
+            <div class="chard__detail">Color de ojos: {{character.eye_color || 'Desconocido'}}</div>
+            <div class="chard__detail">Color de piel: {{character.skin_color || 'Desconocido'}}</div>
+            <div class="chard__detail">Peso: {{character.weight || 'Desconocido'}}</div>
+            <div class="chard__detail">Nacimiento: {{character.born || 'Desconocido'}}</div>
+            <div class="chard__detail">Muerte: {{character.died || 'Desconocido'}}</div>
+            <div class="chard__detail">Boggart: {{character.boggart || 'Desconocido'}}</div>
+            <div class="chard__detail">Especie: {{character.species || 'Desconocido'}}</div>
+            <div class="chard__detail">Nacionalidad: {{character.nationality || 'Desconocido'}}</div>
+            <div class="chard__detail">Patronus: {{character.patronus || 'Desconocido'}}</div>
+            <div class="chard__detail">Wiki: 
+                <a [href]="character.wiki" target="_blank">
+                    {{character.wiki || 'Sin Wikipedia'}}
+                </a></div>
+            </div>
+    </div>
+</div>

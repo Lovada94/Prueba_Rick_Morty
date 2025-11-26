@@ -1,43 +1,55 @@
+import { SpellsDetailModalComponent } from './../shared/spells-detail-modal/spells-detail-modal.component';
 import { SpellsService } from './spells.service';
 import { Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { IPagination } from '../utils/pagination.model';
 import { ISpells } from './spells.model';
+import { ButtonModule } from 'primeng/button';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { SpellsCardComponent } from './spells-card/spells-card/spells-card.component';
 
 @Component({
   selector: 'app-spells',
-  imports: [NgIf, CommonModule],
+  imports: [NgIf, CommonModule, ButtonModule,NgbPaginationModule, FormsModule, SpellsCardComponent],
   templateUrl: './spells.component.html',
   styleUrl: './spells.component.scss'
 })
 export class SpellsComponent {
-  character: ISpells[] = [];
+  spell: ISpells[] = [];
   links: IPagination | null = null;
   currentPage: number = 1;
-  totalRecords = 315;
-  rows = 10;
-  first = 0;
+  collectionSize = 315;
+  pageSize = 10;
+  page = 1;
 
-constructor(private spellService: SpellsService){}
+  name = '';
+  errorOnSearch = false;
+
+constructor(
+  private spellService: SpellsService,
+  private dialogSerice: NgbModal
+){}
 
   ngOnInit():void{
-      this.getAllCharacters();
+      this.getAllSpells();
     }
 
-  getAllCharacters(): void {
-    this.spellService.getAllCharacters(this.currentPage).subscribe({
+  getAllSpells(): void {
+    this.spellService.getAllSpells(this.currentPage, this.pageSize).subscribe({
       next: (res) => {
-        this.character = res.body!.data.map((spells) => spells.attributes);
+        this.spell = res.body!.data.map((spells) => spells.attributes);
         this.links = res.body!.links;
         console.log('Lamada completada')
-        console.log(this.character)
+        console.log(this.spell)
       }
     });
   }
 
-  trackByCharacterSlug(index: number, character: ISpells): string {
-    return character.slug;
+  trackBySpellSlug(index: number, spell: ISpells): string {
+    return spell.slug;
   }
 
   handleImageError(event: Event): void {
@@ -45,9 +57,42 @@ constructor(private spellService: SpellsService){}
     imgElement.src = 'assets/images/sin_imagen.jpg'
     }
 
-//   onPageChange(event: PaginatorState): void {
-//   this.currentPage = (event.page ?? 0) + 1;
-//   this.getAllCharacters();
-// }
+  onPageChange(event: number): void {
+    this.currentPage = event;
+    this.getAllSpells();
+  }
+
+  showDetails(spellSlug: String){
+    const modalRef = this.dialogSerice.open(SpellsDetailModalComponent, {
+      size: 'large',
+      backdrop: 'static'
+    });
+    modalRef.componentInstance.slug = spellSlug;
+  }
+
+  searchSpells(): void {
+    if (this.name !== '') {
+     this.spellService.getSpellByName(this.name).subscribe({
+      next: (res) => {
+        this.spell = [];
+        this.spell = res.body!.data.map((spells) => spells.attributes);
+        this.collectionSize = this.collectionSize;
+        this.errorOnSearch = this.spell.length === 0;
+      },
+      error: (err) => {
+        this.errorOnSearch = true;
+        this.spell = [];
+      }
+     })
+    }
+    if (this.name === '') {
+      this.getAllSpells();
+      this.errorOnSearch = false;
+    }
+  }
+
+  getImage(): string {
+    return 'assets/images/curiosity-search-cuate.svg';
+  }
 
 }

@@ -1,0 +1,26 @@
+<div class="modal__container" *ngIf="potions">
+    <div class="header">
+        <div class="header__title">{{potions.name || 'Nombre desconocido'}}</div>
+    </div>
+    <p-button
+        size='small' icon="pi pi-times" [rounded]="true" [text]="true" 
+        severity="danger" (click)="close()"/>
+    <div class="card__detail">
+        <div class="card__detail__left">
+            <img [src]="potions.image" alt="{{ potions.name }}" (error)="handleImageError($event)" class="card__detail__left--img"/>
+        </div>
+        <div class="card__detail__right">
+            <div class="chard__detail">Dificultad: {{potions.difficulty}}</div>
+            <div class="chard__detail">Efecto: {{potions.effect || 'Desconocido'}}</div>
+            <div class="chard__detail">Inventor: {{potions.inventors || 'Desconocido'}}</div>
+            <div class="chard__detail">Ingredientes: {{potions.ingredients || 'Desconocido'}}</div>
+            <div class="chard__detail">Fabricante: {{potions.manufacturers || 'Desconocido'}}</div>
+            <div class="chard__detail">Efectos secundarios: {{potions.side_effects || 'Desconocido'}}</div>
+            <div class="chard__detail">Tiempo de preparación: {{potions.time || 'Desconocido'}}</div>
+            <div class="chard__detail">Wiki: 
+                <a [href]="potions.wiki" target="_blank">
+                {{potions.wiki || 'Sin Wikipedia'}}
+                </a></div>
+        </div>
+    </div>
+</div>

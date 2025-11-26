@@ -1,32 +1,38 @@
+<div class="filter__search">
+    <div class="search__container">
+        <div class="search__input">
+            <input [(ngModel)]="name" class="search__input--input" type="text" placeholder="Buscar" (keydown.enter)="searchPotions()"/>
+        </div>
+        <div class="search__button__container">
+            <div class="search__button--btn" (click)="searchPotions()">
+                <div class="search__button--btn--text">Buscar</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div *ngIf="potion.length > 0" class="cards__container">
     @for (potion of potion; track potion.slug){
-        <div class="char__card">
-            <div class="char__card__header">
-                <img [src]="potion.image" alt="{{ potion.name }}" class="char__card__header--img" (error)="handleImageError($event)"/>
-            </div>
-            <div class="char__card__content">
-                <div class="char__card__content--title">{{ potion.name }}</div>
-                <div class="char__card__content--details">
-                    <div class="char__card__content--details--house">
-                        Dificultad: {{potion.difficulty || 'desconocida'}}
-                    </div>
-                    <div class="char__card__content--details--alias_names">
-                        Tiempo: {{potion.time || 'desconocido'}}
-                    </div>
-                </div>
-            </div>
-            <div class="char__card__footer">
-                <p-button label="Detalles" severity="success" class="char__card__footer--btn" size="large"/>
-            </div>
-          </div>
+        <app-potions-card [potion]="potion"
+        (onDetailClick)="showDetails($event)">
+        </app-potions-card>
     }
 </div>
 
-<div class="paginator__footer">
-    <mat-paginator (page)="onPageChange($event)"
-    [length]="length"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    aria-labelledby="Select page">
-</mat-paginator>
-</div>
+@if (!errorOnSearch) {
+    <div class="pagination__footer">
+        <mat-paginator (page)="onPageChange($event)"
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        aria-labelledby="Select page">
+    </mat-paginator> 
+    </div>
+}
+
+@if(errorOnSearch) {
+    <div class="error__on__search">
+        <img class="error__on__search--img" [src]="getImage()"/>
+        <div class="error__on__search--txt">Sin Resultados</div>
+    </div>
+}

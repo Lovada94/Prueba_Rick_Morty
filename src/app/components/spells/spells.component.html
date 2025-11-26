@@ -1,1 +1,40 @@
-<p>spells works!</p>
+<div class="filter__search">
+    <div class="search__container">
+        <div class="search__input">
+            <input [(ngModel)]="name" class="search__input--input" type="text" placeholder="Buscar" (keydown.enter)="searchSpells()"/>
+        </div>
+        <div class="search__button__container">
+            <div class="search__button--btn" (click)="searchSpells()">
+                <div class="search__button--btn--text">Buscar</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="spell.length > 0" class="cards__container">
+    @for (spell of spell; track spell.slug){
+        <app-spells-card [spell]="spell"
+        (onDetailClick)="showDetails($event)">
+
+        </app-spells-card>
+    }
+</div>
+
+@if (!errorOnSearch) {
+    <div class="pagination__footer">
+        <ngb-pagination (pageChange)="onPageChange($event)"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="collectionSize" 
+        aria-label="Default pagination"
+        [maxSize]="5"
+        />
+    </div>
+}
+
+@if(errorOnSearch) {
+    <div class="error__on__search">
+        <img class="error__on__search--img" [src]="getImage()"/>
+        <div class="error__on__search--txt">Sin Resultados</div>
+    </div>
+}

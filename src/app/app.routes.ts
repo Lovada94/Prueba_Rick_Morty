@@ -4,6 +4,7 @@ import { CharactersComponent } from './components/characters/characters.componen
 import { PotionsComponent } from './components/potions/potions.component';
 import { SpellsComponent } from './components/spells/spells.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export const routes: Routes = [
     {
@@ -35,4 +36,8 @@ export const routes: Routes = [
         component: ContactComponent,
         pathMatch: 'full'
     },
+    {
+        path: '**',
+        component: NotFoundComponent
+    }
 ];

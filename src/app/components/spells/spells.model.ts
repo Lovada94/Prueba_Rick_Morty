@@ -5,6 +5,10 @@ export interface ISpellsResponse {
     data: {id: string, type: 'spell', attributes: ISpells}[]
 }
 
+export interface ISpellsSingleResponse {
+    data: {id: string; type: 'spell'; attributes: ISpells}
+}
+
 export interface ISpells {
     category: string,
     creator: string,

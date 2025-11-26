@@ -1,0 +1,69 @@
+.modal__container{
+    padding: 2rem;
+    border-radius: 1.5rem;
+    max-width: 800px;
+    margin: auto;
+
+    .header {
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        margin-bottom: 3rem;
+
+        &__title{
+            font-size: 2rem;
+            font-weight: bold;
+            color: blue;
+            text-align: center;
+            
+        }
+    }
+
+    .card__detail {
+        display: flex;
+        flex-direction: wrap;
+        gap: 2rem;
+
+        &__left{
+            flex: 1 1 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &--img {
+                width: 100%;
+                max-width: 220px;
+                border-radius: 1rem;
+                object-fit: cover;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        &__right {
+            flex: 1 1 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+
+            .chard__detail {
+                width: 400px;
+                padding: 0.75rem 1rem;
+                border-radius: 0.75rem;
+                font-family: 'Roboto', sans-serif;
+                font-size: 1rem;
+                color: rgb(0, 0, 255);
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+                border-left: 4px solid rgb(70, 33, 139);
+                border-right: 4px solid rgb(70, 33, 139);
+                text-align: center;
+            }
+        }
+    }
+
+    p-button {
+        position: absolute;
+        top: 1rem;
+        right: 2rem;
+    }
+}

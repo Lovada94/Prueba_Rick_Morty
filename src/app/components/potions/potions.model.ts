@@ -5,16 +5,20 @@ export interface IPotionsResponse {
     data: {id: string, type: 'potion', attributes: IPotions}[]
 }
 
+export interface IPotionsSingleResponse {
+    data: {id: string; type: 'potion'; attributes: IPotions}
+}
+
 export interface IPotions {
     characteristics: string,
     difficulty: string,
     effect: string,
     image: string,
     inventors: string,
-    ingredients: string[],
-    manufacturers: string[],
+    ingredients: string,
+    manufacturers: string,
     name: string,
-    side_effects: string[],
+    side_effects: string,
     slug: string,
     time: string,
     wiki: string

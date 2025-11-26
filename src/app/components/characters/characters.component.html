@@ -1,31 +1,61 @@
-<div *ngIf="character.length > 0" class="cards__container">
-    @for (character of character; track character.slug){
-        <div class="char__card">
-            <div class="char__card__header">
-                <img [src]="character.image" alt="{{ character.name }}" class="char__card__header--img" (error)="handleImageError($event)"/>
-            </div>
-            <div class="char__card__content">
-                <div class="char__card__content--title">{{ character.name }}</div>
-                <div class="char__card__content--details">
-                    <div class="char__card__content--details--house">
-                        Casa: {{character.house || 'Ninguna'}}
-                    </div>
-                    <div class="char__card__content--details--alias_names">
-                        Alias: {{character.alias_names.join(', ') || 'Ninguno'}}
-                    </div>
-                    <div class="char__card__content--details--wand">
-                        Varita: {{character.wand || 'Ninguna'}}
+<div class="filter__search">
+    <form [formGroup]="filterForm!">
+        <div class="search__container">
+            <div class="search__container--box">
+                <div class="search__input">
+                    <input formControlName="name" type="text" class="search__input--input" placeholder="Buscar por nombre" (keydown.enter)="searchCharacters()">
+                </div>
+                <div class="search__button__container">
+                    <div class="search__button--btn" (click)="searchCharacters()">
+                        <div class="search__button--btn--text">Buscar</div>
                     </div>
                 </div>
             </div>
-            <div class="char__card__footer">
-                <p-button label="Detalles" severity="success" class="char__card__footer--btn" size="large"/>
+        </div>
+
+        <div class="filter__container">
+            <div class="toggle__container">
+                <p-toggleswitch #toggleSwitch (onChange)="handleSwitchFilter()"/>
             </div>
-          </div>
+            <div class="switch__filter__input">
+                <p-select formControlName="house" [options]="house" size="small" placeholder="Casa de Hogwarts"></p-select>
+            <small *ngIf="hasErrorsHouse('house')" class="switch__filter__input--error">*Este campo no puede estar vacío</small>
+            <p-select formControlName="gender" [options]="gender" size="small" placeholder="Género"></p-select>
+            <small *ngIf="hasErrorsGender('gender')" class="switch__filter__input--error">*Este campo no puede estar vacío</small>
+            </div>
+            <div class="clean__button__container">
+                <div class="clean__button--btn" (click)="clearFormAndFilters()">
+                    <div class="clean__button--btn--text">Limpiar</div>
+                </div>
+                <small *ngIf="formIsEmpty" class="search__input--error">*Hay campos vacíos</small>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="loadingCharacters" class="spinner--container">
+    <p-progress-spinner ariaLabel="loading" />
+</div>
+
+<div *ngIf="character.length > 0" class="cards__container">
+    @for (character of character; track character.slug){
+        <app-character-card [character]="character"
+        (onDetailClick)="showDetails($event)">
+        </app-character-card>
     }
 </div>
 
-<p-paginator (onPageChange)="onPageChange($event)" 
-[first]="first" 
-[rows]="rows"
-[totalRecords]="totalRecords"/>
+@if(!errorOnSearch){
+    <p-paginator (onPageChange)="onPageChange($event)" 
+    [first]="first" 
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="rowsPerPageOptions"/>
+}
+
+@if(errorOnSearch) {
+    <div class="error__on__search">
+        <img class="error__on__search--img" [src]="getImage()"/>
+        <div class="error__on__search--txt">Sin Resultados</div>
+    </div>
+}

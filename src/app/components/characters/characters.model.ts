@@ -5,6 +5,10 @@ export interface ICharatcerResponse {
     data: {id: string, type: 'character', attributes: ICharacter}[];
 }
 
+export interface ICharacterSingleResponse {
+    data: {id: String; type: 'character'; attributes: ICharacter};
+}
+
 export interface ICharacter {
     alias_names: string [],
     animagus: string,
@@ -31,4 +35,12 @@ export interface ICharacter {
     wand: string [],
     weight: string,
     wiki: string
+}
+
+export interface ICharacterFilter {
+    page: number | null,
+    rows: number | null,
+    name: string | null,
+    gender: string | null,
+    house: string | null
 }

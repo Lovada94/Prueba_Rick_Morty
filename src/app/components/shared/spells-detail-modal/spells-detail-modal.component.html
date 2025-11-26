@@ -1,0 +1,25 @@
+<div class="modal__container" *ngIf="spell">
+    <div class="header">
+        <div class="header__title">{{spell.name || 'Nombre desconocido'}}</div>
+    </div>
+    <p-button
+        size='small' icon="pi pi-times" [rounded]="true" [text]="true" 
+        severity="danger" (click)="close()"/>
+    <div class="card__detail">
+        <div class="card__detail__left">
+            <img [src]="spell.image" alt="{{ spell.name }}" (error)="handleImageError($event)" class="card__detail__left--img"/>
+        </div>
+        <div class="card__detail__right">
+            <div class="chard__detail">Categoría: {{spell.category || 'Desconocida'}}</div>
+            <div class="chard__detail">Creador: {{spell.creator || 'Desconocido'}}</div>
+            <div class="chard__detail">Efecto: {{spell.effect || 'Desconocido'}}</div>
+            <div class="chard__detail">Movimiento: {{spell.hand || 'Desconocido'}}</div>
+            <div class="chard__detail">Encantamiento: {{spell.incantation || 'Desconocido'}}</div>
+            <div class="chard__detail">Luz: {{spell.light || 'Sin luz'}}</div>
+            <div class="chard__detail">Wiki: 
+                <a [href]="spell.wiki" target="_blank">
+                {{spell.wiki || 'Sin Wikipedia'}}
+                </a></div>
+        </div>
+    </div>
+</div>

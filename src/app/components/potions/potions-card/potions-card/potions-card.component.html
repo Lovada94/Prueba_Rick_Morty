@@ -1,0 +1,22 @@
+@if (potion){
+    <div class="char__card">
+        <div class="char__card__header">
+            <img [src]="potion.image" alt="{{ potion.name }}" class="char__card__header--img" (error)="handleImageError($event)"/>
+        </div>
+        <div class="char__card__content">
+            <div class="char__card__content--title">{{ potion.name }}</div>
+            <div class="char__card__content--details">
+                <div class="char__card__content--details--house">
+                    Dificultad: {{potion.difficulty || 'desconocida'}}
+                </div>
+                <div class="char__card__content--details--alias_names">
+                    Tiempo: {{potion.time || 'desconocido'}}
+                </div>
+            </div>
+        </div>
+        <div class="char__card__footer">
+            <p-button label="Detalles" severity="success" class="char__card__footer--btn" size="large"
+            (click)="showDetails(potion.slug)"/>
+        </div>
+      </div>
+}
